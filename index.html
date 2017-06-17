@@ -1,13 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="de">
 <head>
+<meta charset="utf-8"/>
 </head>
 <body>
-<h1>Starten von Zookeeper</h1>
+<h1>Starten von ZooInspector</h1>
 <p>
-In das Verzeichnis contrib/ZooInspector wechseln
+ZooInspector ist ein GUI, um die in Zookeeper-Server abgelegte Konfigurationsdateien anzuzeigen. Änderungen werden auch unterstützt.
+</p>
+<p>
+Um ZooInspector zu starten muss in das Verzeichnis <b>contrib/ZooInspector</b> gewechselt werden und dort der Befehl
 <pre>
 java -cp ../../lib/*:lib/*:zookeeper-3.4.9-ZooInspector.jar:../../zookeeper-3.4.9.jar org.apache.zookeeper.inspector.ZooInspector
 </pre>
+ausgeführt werden.
 </p>
 </body>
 </html>
