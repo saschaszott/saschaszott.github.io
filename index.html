@@ -8,27 +8,44 @@
     <h1>Starten von SolrCloud</h1>
     <p>
       Beispiel-Setup kann erzeugt werden mittels
+    </p>
+    <p>
       <code>
         bin/solr -e cloud
       </code>
+    </p>
+    <p>
       Anschließend werden alle erfolrderlichen Einstellungen interaktiv abgefragt.
-      <br/>
+    </p>
+    <p>
       Einen Knoten (solr node) herunterfahren mittels
+    </p>
+    <p>
       <code>
         bin/solr stop -p 8984
       </code>
+    </p>
+    <p>
       Die Spezifikation des Knoten erfolgt über seinen Port.
-      <br/>
+    </p>
+    <p>
       Knoten wieder hochfahren mittels
+    </p>
+    <p>
       <code>
         bin/solr start -cloud -p 8984 -s "example/cloud/node2/solr" -z localhost:9983
       </code>
+    </p>
+    <p>
       Als Wert des Parameters <b>z</b> wird die Adresse des Zookeeper-Servers angegeben.
-      <br/>
+    <p>  
       Alle Knoten des SolrCloud Clusters herunterfahren mittels
+    </p>
+    <p>
       <code>
         bin/solr stop -all
       </code>
+    </p>
     <h1>Starten von ZooInspector</h1>
     <p>
       ZooInspector ist ein GUI, um die im Zookeeper-Server abgelegten Konfigurationsdateien anzuzeigen. Änderungen werden von ZooInspector auch unterstützt.
