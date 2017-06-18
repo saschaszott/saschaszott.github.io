@@ -15,9 +15,19 @@ Ist ein Suchindex zu groß oder ist die *Query Load* zu groß, so dass der Betri
 
 Ein Suchindex ist ein gewöhnlicher Lucene-Index, der im Dateisystem als eine Menge von Dateien gespeichert ist.
 
-Ein Suchindex kann in mehrere Teile geschnitten werden. Dieses Konzept nennt man **Sharding**. Die einzelnen Teile sind wiederum eigenständige Lucene-Indizes und werden **Shards** genannt. Man kann jedem Solr-Server des SolrCloud-Clusters einen anderen Shard zuweisen. Dazu darf die Anzahl Shards nicht größer als die Anzahl der zur Verfügung stehenden Solr-Server sein.
+Ein Suchindex kann in mehrere Teile geschnitten werden. Dieses Konzept nennt man **Sharding**. Die einzelnen Teile sind wiederum eigenständige Lucene-Indizes und werden **Shards** genannt. Die Menge aller Shards wird als **Collection** bezeichnet. Eine Collection ist folglich ein logischer Lucene-Index, der die Dokumente aller Shards umfasst. Man kann jedem Solr-Server des SolrCloud-Clusters einen anderen Shard zuweisen. Dazu darf die Anzahl Shards nicht größer als die Anzahl der zur Verfügung stehenden Solr-Server sein.
 
 Wird ein neues Dokument indexiert, so wird zuerst bestimmt, in welchem Shard das Dokument gespeichert werden muss. Diesen Vorgang nennt man **Document Routing**. Es ist auch möglich, den Shard explizit vorzugeben, indem man den Shardnamen getrennt durch ein Ausrufezeichen als Präfix vor die Dokument-ID fügt.
+
+Problematisch an diesem Vorgehen ist, dass jeder Solr-Server exklusiv einen Teil der Collection, also des Gesamtindex, hält. Fällt ein Shard aus, dann können die in dem Shard abgelegten Dokumente nicht mehr gefunden werden. Die Lösung dieses Problems besteht in der Einführung von Shard-Kopien. Für jeden Shard wird eine Menge von exakten Kopien erzeugt. Diese Kopien bezeichnet man als **Replicas**. Die Shard-Replicas werden auf anderen Solr-Servern repliziert. Die Anzahl der Kopien ist ein Konfigurationsparamter des SolrCloud-Clusters.
+
+Ein Shard umfasst nun einen *Master* und eine vorgegebene Anzahl von Kopien, die Replicas. Der Master wird auch als **Shard Leader** bezeichnet. Alle Dokumente, die bei der Indexierung dem Shard zugewiesen werden, werden zum Shard Leader geleitet und dort indexiert. Anschließend kümmert sich der Leader um die Replikation zu den einzelnen Replicas des Shards.
+
+Eine Suchanfrage gegen das SolrCloud-Cluster wird nun beantwortet, indem ein Broadcast an alle Shard Leader gesendet wird und schließlich die einzelnen Teilergebnisse zu einem Gesamtranking zusammengeführt werden. Der Benutzer erhält eine Ergebnisliste und merkt nicht, dass der Gesamtindex gar nicht physisch auf einem Solr-Server existiert, sondern verteilt auf mehrere Solr-Server ist.
+
+Fällt nun ein Solr-Server aus, so kann es passieren, dass auf dem ausgefallenen Solr-Server ein Shard Leader existierte. Für jeden Shard muss im SolrCloud-Cluster ein Leader existieren. Daher muss in diesem Fall ein neuer Leader bestimmt werden. Dazu wird aus den Shard Replicas ein Solr-Server ausgewählt (**Shard Leader Election**). Dieser wird neuer Shard Leader.
+
+Wird der ausgefallene Solr-Server wieder hochgefahren, so meldet er sich im SolrCloud-Cluster an und muss nun reintegriert werden. In Abhängigkeit von der Dauer des Ausfalls kann der Dokumentenbestand auf dem Solr-Server veraltet sein. Daher muss eine Wiederherstellungsoperation (**Node Recovery**) gestartet werden, die zum Ziel hat den Dokumentenbestand des Solr-Servers wieder mit dem Zustand im Cluster zu synchronisieren. War der Solr-Server vor der Downtime Shard Leader, so wird er nun Shard Replica. Eine automatische Ernennenung des Solr-Servers zum Shard Leader erfolgt nicht.
 
 ## Starten von SolrCloud
 
