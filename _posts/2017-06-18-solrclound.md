@@ -29,6 +29,22 @@ Fällt nun ein Solr-Server aus, so kann es passieren, dass auf dem ausgefallenen
 
 Wird der ausgefallene Solr-Server wieder hochgefahren, so meldet er sich im SolrCloud-Cluster an und muss nun reintegriert werden. In Abhängigkeit von der Dauer des Ausfalls kann der Dokumentenbestand auf dem Solr-Server veraltet sein. Daher muss eine Wiederherstellungsoperation (**Node Recovery**) gestartet werden, die zum Ziel hat den Dokumentenbestand des Solr-Servers wieder mit dem Zustand im Cluster zu synchronisieren. War der Solr-Server vor der Downtime Shard Leader, so wird er nun Shard Replica. Eine automatische Ernennenung des Solr-Servers zum Shard Leader erfolgt nicht.
 
+## Beispiele
+
+Ein SolrCloud-Cluster besteht aus 2 Solr-Servern und 2 Shards. Jeder Shard hat zwei Kopien (einen Shard Leader und ein Shard Replica).
+
+Es ergebit sich folgende Aufteilung:
+
+Shard 1: Leader_1, Replica_1
+Shard 2: Leader_2, Replica_2
+
+Die vier Teilen können nun wie folgt auf die beiden Solr-Server verteilt werden:
+
+Server 1: Leader_1, Replica_2
+Server 2: Leader_2, Replica_1
+
+Fällt ein Solr-Server aus, so gibt es für den Benutzer keine Auswirkungen, da jeder Solr-Server den gesamten Index (bestehend aus zwei Shards) enthält. Im Falle des Ausfalls hält der verbleibende Solr-Server zwei Shard Leader.
+
 ## Starten von SolrCloud
 
 Ein lokales Beispiel-Setup kann erzeugt werden mittels
