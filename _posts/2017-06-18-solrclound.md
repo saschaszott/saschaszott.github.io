@@ -29,7 +29,7 @@ Eine Suchanfrage gegen das SolrCloud-Cluster wird nun beantwortet, indem ein Bro
 
 Fällt nun ein Solr-Server aus, so kann es passieren, dass auf dem ausgefallenen Solr-Server ein Shard Leader existierte. Für jeden Shard muss im SolrCloud-Cluster ein Leader existieren. Daher muss in diesem Fall ein neuer Leader bestimmt werden. Dazu wird aus den Shard Replicas ein Solr-Server ausgewählt (**Shard Leader Election**). Dieser wird neuer Shard Leader.
 
-Wird der ausgefallene Solr-Server wieder hochgefahren, so meldet er sich im SolrCloud-Cluster an und muss nun reintegriert werden. In Abhängigkeit von der Dauer des Ausfalls kann der Dokumentenbestand auf dem Solr-Server veraltet sein. Daher muss eine Wiederherstellungsoperation (**Node Recovery**) gestartet werden, die zum Ziel hat den Dokumentenbestand des Solr-Servers wieder mit dem Zustand im Cluster zu synchronisieren. War der Solr-Server vor der Downtime Shard Leader, so wird er nun Shard Replica. Eine automatische Ernennenung des Solr-Servers zum Shard Leader erfolgt nicht.
+Wird der ausgefallene Solr-Server wieder hochgefahren, so meldet er sich im SolrCloud-Cluster an und muss nun reintegriert werden. In Abhängigkeit von der Dauer des Ausfalls kann der Dokumentenbestand auf dem Solr-Server veraltet sein. Daher muss eine Wiederherstellungsoperation (**Node Recovery**) gestartet werden, die zum Ziel hat den Dokumentenbestand des Solr-Servers wieder mit dem Zustand im Cluster zu synchronisieren. Dazu hat jedes Index-Dokument ein Feld *_version_*, das von Solr verwaltet und zur effizienten Synchronisation verwendet wird. War der Solr-Server vor der Downtime Shard Leader, so wird er nun Shard Replica. Eine automatische Ernennenung des Solr-Servers zum Shard Leader erfolgt nicht.
 
 ## Beispiele
 
