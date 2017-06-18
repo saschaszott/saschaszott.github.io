@@ -36,11 +36,13 @@ Ein SolrCloud-Cluster besteht aus 2 Solr-Servern und 2 Shards. Jeder Shard hat z
 Es ergebit sich folgende Aufteilung:
 
 Shard 1: Leader_1, Replica_1
+
 Shard 2: Leader_2, Replica_2
 
 Die vier Teilen können nun wie folgt auf die beiden Solr-Server verteilt werden:
 
 Server 1: Leader_1, Replica_2
+
 Server 2: Leader_2, Replica_1
 
 Fällt ein Solr-Server aus, so gibt es für den Benutzer keine Auswirkungen, da jeder Solr-Server den gesamten Index (bestehend aus zwei Shards) enthält. Im Falle des Ausfalls hält der verbleibende Solr-Server zwei Shard Leader.
