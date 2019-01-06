@@ -68,7 +68,7 @@ dagegen nicht genutzt.
 
 Ein MBOX-vs-Maildir Benchmark aus dem Jahr 2003 kann unter http://www.courier-mta.org/mbox-vs-maildir/ abgerufen werden.
 
-# Nachtrag 2
+## Nachtrag 2
 
 Um die MBOX-Datei zu verkleinern, kann das **Archive**-Feature von TB verwendet werden. Jede Mail kann in TB in
 ein Archiv verschoben werden. Die Mail ist dann weiterhin durchsuchbar und sie wird weiterhin im Mail Client
