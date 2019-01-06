@@ -1,0 +1,65 @@
+# Unterstützung des Maildir Mailbox Formats in Thunderbird
+
+Ich habe mich schon länger gewundert, warum mein inkrementelles Backup regelmäßig mehrere GB umfasst,
+obwohl ich seit dem letzten inkrementellen Backup nur an wenigen (kleinen) Dateien Änderungen 
+vorgenommen habe bzw. nur wenige (kleine) Dateien neu angelegt habe. Es kann durchaus im Abstand von
+wenigen Stunden passieren, dass ein inkrementelles Backup auf mehrere GB wächst.
+
+Dieser Beobachtung habe ich lange Zeit keine große Aufmerksamkeit gewidmet. Nun hatte ich aber die
+Zeit der Ursache auf den Grund zu gehen. Und nach einer Weile wurde ich auch fündig: der Mail-Client
+Thunderbird (momentan setze ich Version 60 ein) speichert alle Mails eines Postfachs (im TB-Sprech
+"profile" genannt) in **einer** MBOX-Datei. Bei mir ist diese Datei schon einige GB groß, da sich
+alle Mails inkl. Anhänge in dieser Datei befinden.
+
+Jede neue Mail (gesendet oder empfangen) führt nun zu einer (wenn auch kleinen) Änderung an der
+MBOX-Datei. Auch die Komprimieren-Funktion von TB führt zur Umorganisation der MBOX-Datei. Aus 
+Sicht des inkrementellen Backup-Mechanismus führt jede Änderung (so klein sie auch sein mag) zur
+Notwendigkeit die gesamte MBOX-Datei ins Backup aufzunehmen. Das führt zur Aufblähung des Backups,
+die nur durch das Zusammenfügen mehrerer Inkremente zu einem Inkrement gelöst werden kann (Merge).
+Diese Operation ist aufwendig.
+
+Die Lösung des Problems ist eigentlich recht einfach: statt alle Mails eines Postfachs in eine
+Datei zu packen, wird eine Datei pro Mail spendiert. Neu eintreffende Mails führen zu neuen Dateien.
+Diese werden beim nächsten inkrementellen Backupdurchlauf gesichert. Gelöschte Mails führen zum
+Löschen von Dateien. Aus Sicht des Backups muss nur das Entfernen in den Metadaten gespeichert werden.
+Die Speicherung / Organisation von E-Mails eines Postfachs in dieser Art und Weise wird als Maildir-Format
+bezeichnet.
+
+Viele Mail-Clients unterstützen sowohl das MBOX- als auch das Maildir-Format. Wikipedia hat dazu
+eine hilfreiche Vergleichstabelle:
+
+https://en.wikipedia.org/wiki/Comparison_of_email_clients#Database,_folders_and_customization
+
+(siehe Spalte "Message File Format").
+
+Leider unterstützt Thunderbird das Maildir-Format noch nicht vollumfänglich. Die Entwickler haben das
+Feature als *experimental* ausgewiesen. Das Feature kann über einen Umweg aktiviert werden. TB erlaubt
+dann auch die Konvertierung eines bestehenden MBOX-Profils in ein Maildir-Profils.
+
+Unter
+
+https://www.thunderbird.net/en-US/thunderbird/60.0beta/releasenotes/
+
+wird der entsprechende Umweg beschrieben (`mail.store_conversion_enabled` heißt der Konfigurationsschlüssel).
+
+Leider gibt es noch einige offenen Punkte bis die Maildir-Unterstützung in TB als stabil angesehen werden
+kann. Ich würde momentan noch nicht auf Maildir setzen, da mir das Risiko des Mailverlusts zu groß erscheint.
+Es gibt aber auch Benutzer, die das Feature schon einsetzen und bislang keine Probleme festgestellt haben.
+
+Hier ohne Anspruch auf Vollständigkeit einige Links:
+
+* Thunderbird: From mbox to maildir (https://www.wilderssecurity.com/threads/thunderbird-from-mbox-to-maildir.389599/)
+* Status of MailDir (http://forums.mozillazine.org/viewtopic.php?f=28&t=3034422)
+
+Mozilla hat zu der Thematik eine Wikiseite spendiert. Hier sind auch die entsprechenden Bugzilla Issues verlinkt:
+
+https://wiki.mozilla.org/Thunderbird/Maildir
+
+Das Bugzilla Ticket ist ein Meta-Ticket, in dem alle relevanten Tickets verlinkt sind: https://bugzilla.mozilla.org/show_bug.cgi?id=845952
+
+Mein Wunsch für 2019: hoffentlich stecken die TB-Entwickler etwas Zeit in die weitere Arbeit am Maildir-Support
+in Thunderbird und die baldige Fertigstellung eines stabilen, produktionsreifen Zustands. Mein Backup-Medium würde 
+sich darüber zumindest sehr freuen.
+
+
+
