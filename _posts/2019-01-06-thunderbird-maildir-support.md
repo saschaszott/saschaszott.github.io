@@ -26,9 +26,8 @@ Die Speicherung / Organisation von E-Mails eines Postfachs in dieser Art und Wei
 bezeichnet.
 
 Viele Mail-Clients unterstützen sowohl das MBOX- als auch das Maildir-Format. Wikipedia hat dazu
-eine hilfreiche Vergleichstabelle:
-
-https://en.wikipedia.org/wiki/Comparison_of_email_clients#Database,_folders_and_customization
+eine hilfreiche 
+[Vergleichstabelle](https://en.wikipedia.org/wiki/Comparison_of_email_clients#Database,_folders_and_customization)
 
 (siehe Spalte "Message File Format").
 
@@ -38,7 +37,7 @@ dann auch die Konvertierung eines bestehenden MBOX-Profils in ein Maildir-Profil
 
 Unter
 
-https://www.thunderbird.net/en-US/thunderbird/60.0beta/releasenotes/
+(https://www.thunderbird.net/en-US/thunderbird/60.0beta/releasenotes/)
 
 wird der entsprechende Umweg beschrieben (`mail.store_conversion_enabled` heißt der Konfigurationsschlüssel).
 
@@ -48,18 +47,16 @@ Es gibt aber auch Benutzer, die das Feature schon einsetzen und bislang keine Pr
 
 Hier ohne Anspruch auf Vollständigkeit einige Links:
 
-* Thunderbird: From mbox to maildir (https://www.wilderssecurity.com/threads/thunderbird-from-mbox-to-maildir.389599/)
-* Status of MailDir (http://forums.mozillazine.org/viewtopic.php?f=28&t=3034422)
+* [Thunderbird: From mbox to maildir](https://www.wilderssecurity.com/threads/thunderbird-from-mbox-to-maildir.389599/)
+* [Status of MailDir](http://forums.mozillazine.org/viewtopic.php?f=28&t=3034422)
 
 Mozilla hat zu der Thematik eine Wikiseite spendiert. Hier sind auch die entsprechenden Bugzilla Issues verlinkt:
 
 https://wiki.mozilla.org/Thunderbird/Maildir
 
-Das Bugzilla Ticket ist ein Meta-Ticket, in dem alle relevanten Tickets verlinkt sind: https://bugzilla.mozilla.org/show_bug.cgi?id=845952
+Das Bugzilla Ticket [845952](https://bugzilla.mozilla.org/show_bug.cgi?id=845952) ist ein Meta-Ticket, in dem 
+alle relevanten Tickets zur Problematik verlinkt sind. 
 
 Mein Wunsch für 2019: hoffentlich stecken die TB-Entwickler etwas Zeit in die weitere Arbeit am Maildir-Support
 in Thunderbird und die baldige Fertigstellung eines stabilen, produktionsreifen Zustands. Mein Backup-Medium würde 
 sich darüber zumindest sehr freuen.
-
-
-
