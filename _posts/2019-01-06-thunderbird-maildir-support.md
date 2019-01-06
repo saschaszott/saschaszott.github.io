@@ -28,7 +28,6 @@ bezeichnet.
 Viele Mail-Clients unterstützen sowohl das MBOX- als auch das Maildir-Format. Wikipedia hat dazu
 eine hilfreiche 
 [Vergleichstabelle](https://en.wikipedia.org/wiki/Comparison_of_email_clients#Database,_folders_and_customization)
-
 (siehe Spalte "Message File Format").
 
 Leider unterstützt Thunderbird das Maildir-Format noch nicht vollumfänglich. Die Entwickler haben das
@@ -37,7 +36,7 @@ dann auch die Konvertierung eines bestehenden MBOX-Profils in ein Maildir-Profil
 
 Unter
 
-(https://www.thunderbird.net/en-US/thunderbird/60.0beta/releasenotes/)
+https://www.thunderbird.net/en-US/thunderbird/60.0beta/releasenotes/
 
 wird der entsprechende Umweg beschrieben (`mail.store_conversion_enabled` heißt der Konfigurationsschlüssel).
 
