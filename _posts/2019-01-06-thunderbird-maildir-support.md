@@ -59,3 +59,28 @@ alle relevanten Tickets zur Problematik verlinkt sind.
 Mein Wunsch für 2019: hoffentlich stecken die TB-Entwickler etwas Zeit in die weitere Arbeit am Maildir-Support
 in Thunderbird und die baldige Fertigstellung eines stabilen, produktionsreifen Zustands. Mein Backup-Medium würde 
 sich darüber zumindest sehr freuen.
+
+## Nachtrag 1
+
+Die Maildir-Implementierung in TB entspricht nicht vollständig der [Maildir-Spezifikation](http://cr.yp.to/proto/maildir.html).
+Im Gegensatz zur Spec werden bei TB nur die beiden Verzeichnisse `tmp` und `cur` verwendet. Das Verzeichnis `new` wird
+dagegen nicht genutzt.
+
+Ein MBOX-vs-Maildir Benchmark aus dem Jahr 2003 kann unter http://www.courier-mta.org/mbox-vs-maildir/ abgerufen werden.
+
+# Nachtrag 2
+
+Um die MBOX-Datei zu verkleinern, kann das **Archive**-Feature von TB verwendet werden. Jede Mail kann in TB in
+ein Archiv verschoben werden. Die Mail ist dann weiterhin durchsuchbar und sie wird weiterhin im Mail Client
+angezeigt. Für Einzelheiten zur Funktion sei auf den [KB-Eintrag](https://support.mozilla.org/en-US/kb/archived-messages)
+verwiesen.
+
+Jedes Archiv wird in einer eigenen MBOX-Datei verwaltet. Wenn man z.B. eine monatsweise Organisation des Archivs
+vornimmt, wird nach spätestens 31 Tagen eine neue MBOX-Datei angelegt. Diese Datei kann pro Monat nur eine moderate
+Größe annehmen. Nach Monatsablauf wird das Archiv i.d.R. nur noch selten modifiziert, so dass die zugehörige MBOX-Datei
+relativ stabil ist und nur noch selten ins inkrementelle Backup wandert.
+
+Dieser Ansatz erfordert aber manuelle Arbeit, weil die Mails durch den Benutzer in das Archiv verschoben werden müssen.
+Es ist also aus meiner Sicht nur ein Workaround um das oben beschriebene Problem zu lösen.
+
+
