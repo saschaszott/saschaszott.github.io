@@ -41,4 +41,7 @@ $ git checkout master
 # Merge durchführen, d.h. Fork mit dem Upstream-Repo synchronisieren
 # hierbei werden lokale Änderungen NICHT überschrieben
 $ git merge upstream/master
+
+# Änderungen in den Fork auf Github übertragen
+$ git push
 ```
