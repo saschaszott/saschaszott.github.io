@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Unterstützung des Maildir Mailbox Formats in Thunderbird"
+date:   2019-01-16 12:00:00 -0600
+---
+
 # Unterstützung des Maildir Mailbox Formats in Thunderbird
 
 Ich habe mich schon länger gewundert, warum mein inkrementelles Backup regelmäßig mehrere GB umfasst,
