@@ -8,7 +8,7 @@ In einem MySQL Docker-Container (für die Entwicklung) habe ich eine temporäre 
 MySQL-Konfigurationsdatei `etc/mysql/mysql.conf.d/mysqld.cnf` vorgenommen, um alle eintreffenden 
 SQL-Statements in einer Protokolldatei zu erfassen (mir ist bekannt, dass man eigentlich
 keine Konfigurationsänderungen in bestehenden Containern vornehmen sollte, sondern besser das
-`Dockerfile` anpasst, einen neues Image erzeugt und schließlich einen neuen Container aus
+`Dockerfile` anpasst, ein neues Image erzeugt und schließlich einen neuen Container aus
 dem Image erzeugt und startet).
 
 Für schnelle Testzwecke auf der Entwicklungsmaschine ist das Vorgehen aber praktisch.
@@ -49,7 +49,7 @@ verändert oder im Container neu angelegt wurden. Im Detail kann man das unter
 
 https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-the-overlay-driver-works
 
-nachlesen (dort befindet sich auch ein Schaubild).
+nachlesen (dort befindet sich auch ein Schaubild, das dem Mechanismus visualisiert).
 
 Um den Wert des Eintrags schneller anzuzeigen, kann man den o.g. `inspect`-Befehl mit `grep` kombinieren
 (oder `jq` bemühen, um im JSON zu selektieren):
