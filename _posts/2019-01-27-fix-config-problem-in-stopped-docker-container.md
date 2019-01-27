@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to fix an invalid config file in a stopped docker container (on Mac OS X)"
+title:  "How to fix an invalid config file in a stopped Docker container (on Mac OS X)"
 date:   2019-06-17 16:16:01 -0600
 ---
 
