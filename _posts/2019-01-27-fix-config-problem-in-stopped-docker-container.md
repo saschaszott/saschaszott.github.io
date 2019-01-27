@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How to fix an invalid config file in a stopped Docker container (on Mac OS X)"
-date:   2019-06-17 16:16:01 -0600
+date:   2019-01-27 12:00:00 -0600
 ---
 
 In einem MySQL Docker-Container (für die Entwicklung) habe ich eine temporäre Änderung an der 
