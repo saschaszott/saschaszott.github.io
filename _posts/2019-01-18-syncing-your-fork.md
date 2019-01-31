@@ -45,3 +45,6 @@ $ git merge upstream/master
 # Änderungen in den Fork auf Github übertragen
 $ git push
 ```
+
+In der Github-Web-UI sollte nun die Meldung *This branch is even with $ORIGINAL_OWNER:master* erscheinen.
+Damit entspricht der Stand im Branch `master` des eigenen Forks dem Stand im Original-Repository.
