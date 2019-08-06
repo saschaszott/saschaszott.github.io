@@ -133,5 +133,5 @@ cat /run/config/docker/daemon.json
 # Datei neu schreiben
 cat - > /run/config/docker/daemon.json
 
-# zum Beenden und Speichern: STRG+C drücken
+# zum Beenden und Speichern: STRG+D drücken
 ```
