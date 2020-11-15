@@ -51,6 +51,9 @@ $ git merge upstream/bar-branch
 
 # Änderungen im foo-branch des Forks auf Github übertragen
 $ git push
+
+# Tags aktualisieren (aus dem upstream Repo)
+$ git push --tags
 ```
 
 In der Github-Web-UI sollte nun nach Auswahl des `foo-branch` 
