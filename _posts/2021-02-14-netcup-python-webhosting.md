@@ -8,12 +8,12 @@ title:  "Python 3 Webhosting mit Netcup"
 - das Webhosting-Paket von Netcup bietet leider keine Möglichkeit Python Packages per `pip` (oder `conda`) nachzuinstallieren
 - nach dem Login per SSH steht kein `python` (weder 2 noch 3) zur Verfügung
 - allerdings wird im Webhosting WSGI in Verbindung mit **Phusion Passenger** unterstützt
-- es ist daher hilfreich, wenn man sich vorab unter https://www.phusionpassenger.com/docs/tutorials/what_is_passenger/ über das Konzept von Phusion Passanger informiert
-- die folgende Anleitung basiert teilweise auf dem Quickstart Tutorial unter https://www.phusionpassenger.com/docs/tutorials/quickstart/python/
-- ferner war folgendes Github-Repo hilfreich: https://github.com/phusion/passenger-python-flask-demo/tree/end_result
+- es ist daher hilfreich, wenn man sich vorab [hier](https://www.phusionpassenger.com/docs/tutorials/what_is_passenger/) über das Konzept von Phusion Passanger informiert
+- die folgende Anleitung basiert teilweise auf dem [Quickstart Tutorial](https://www.phusionpassenger.com/docs/tutorials/quickstart/python/)
+- ferner war [dieses Github-Repo](https://github.com/phusion/passenger-python-flask-demo/tree/end_result) hilfreich für die ersten Schritte 
 - die Anleitung wurde mit Python 3 erstellt und gestest -- vermutlich kann die Anleitung mit leichten Modifikationen aber auch verwendet werden, um ein Python 2 Projekt zu hosten
 
-⚠ Achtung Stolperfalle: Die Anleitung zum Deployment von Python-Anwenungen im Netcup-Wiki unter https://www.netcup-wiki.de/wiki/Python_Webprogrammierung scheint nicht mehr dem Stand der Technik zu entsprechen. Die darin enthaltenen Anweisungen kann man daher ignorieren ;)
+⚠ Achtung Stolperfalle: Die Anleitung zum Deployment von Python-Anwenungen im [Netcup-Wiki](https://www.netcup-wiki.de/wiki/Python_Webprogrammierung) scheint nicht mehr dem Stand der Technik zu entsprechen. Die darin enthaltenen Anweisungen kann man daher ignorieren ;)
 
 ### Konfigurationsanleitung für eine einfache Flask-App
 
