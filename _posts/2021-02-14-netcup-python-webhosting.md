@@ -231,5 +231,22 @@ $ scp -r jinja2/ hostingXXX@188.XXX.XXX.XXX:/flask-app
 $ scp -r markupsafe/ hostingXXX@188.XXX.XXX.XXX:/flask-app
 ```
 
+#### Abschluss
 
+Nun kann man erneut die URL https://flask-app.saschaszott.de aufrufen.
 
+Die obige Fehlermeldung sollte durch das Kopieren der fehlenden Python Packages nun
+verschwunden sein.
+
+Es sollte im Webbrowser folgende Ausgabe erscheinen:
+
+![Flask Result](/resources/flask-result.png)
+
+#### Offene Punkte
+
+Hier führe ich noch einige Fragen auf, die ich bis dato nicht geklärt habe:
+
+- Kann man das Kopieren der Python Packages von der lokalen Entwicklungsumgebung auf den Webspace
+  einfach automatisieren (ohne die Kaskade der SCP-Befehle)?
+- Warum führt das Erzeugen der `venv` zu weiteren Paketen im Verzeichnis `venv/lib/python3.6/site-packages`,
+  z.B. `setuptools`, `pkg_resources`, `easy_install.py`?
