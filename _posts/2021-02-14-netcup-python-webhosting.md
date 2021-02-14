@@ -153,4 +153,7 @@ The issue has been logged for investigation. Please try again later.
 ```
 
 Will man mehr über den Fehler wissen, so kann man in den Python-Einstellungen (s.o.)
-auch den Entwicklungsmodus temporär aktivieren.
+auch den Entwicklungsmodus temporär aktivieren. Man erhält dann beim Aufruf der o.g.
+URL folgende Fehlerseite:
+
+
