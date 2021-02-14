@@ -12,7 +12,7 @@ title:  "Python 3 Webhosting mit Netcup"
 - die folgende Anleitung basiert teilweise auf dem Quickstart Tutorial unter https://www.phusionpassenger.com/docs/tutorials/quickstart/python/
 - ferner war folgendes Github-Repo hilfreich: https://github.com/phusion/passenger-python-flask-demo/tree/end_result
 
-Die Anleitung im Netcup-Wiki unter https://www.netcup-wiki.de/wiki/Python_Webprogrammierung scheint nicht mehr dem Stand der Technik zu entsprechen.
+⚠ Achtung Stolperfalle: Die Anleitung im Netcup-Wiki unter https://www.netcup-wiki.de/wiki/Python_Webprogrammierung scheint nicht mehr dem Stand der Technik zu entsprechen.
 Die darin enthaltenen Anweisungen kann man daher ignorieren ;)
 
 ### Konfigurationsanleitung für eine einfache Flask-App
@@ -21,7 +21,7 @@ Die darin enthaltenen Anweisungen kann man daher ignorieren ;)
 
 1. Neue Subdomain anlegen
    - Name der Subdomain: `flask-app.saschaszott.de`
-   - Dokumentenstamm (Document Root): '/flask-app/static`
+   - Dokumentenstamm (Document Root): `/flask-app/static`
    - Domain mit Let's Encrypt schützen: Checkbox aktivieren
    - bis zu 5 Minuten warten bis die Subdomain im WCP angezeigt wird
 2. Hosting-Einstellungen im WCP aufrufen
@@ -153,7 +153,83 @@ The issue has been logged for investigation. Please try again later.
 ```
 
 Will man mehr über den Fehler wissen, so kann man in den Python-Einstellungen (s.o.)
-auch den Entwicklungsmodus temporär aktivieren. Man erhält dann beim Aufruf der o.g.
+im WCP auch den Entwicklungsmodus temporär aktivieren. Man erhält dann beim Aufruf der o.g.
 URL folgende Fehlerseite:
 
 ![Passenger Error Details](/resources/passenger-error-details.png)
+
+Die Fehlermeldung resultiert aus dem Fehlen des Flask Packages:
+
+```
+ImportError: No module named 'flask'
+```
+
+Wie oben beschrieben, ist es im Webhosting-Tarif leider nicht möglich fehlende Packages
+per `pip` zu installieren. Über einen Umweg (Anlegen eines _virtual environment_ `venv`)
+kommen wir aber dennoch zum Ziel und können das fehlende Flask Package installieren.
+
+#### Erzeugen eines Virtual Environment in der lokalen Entwicklungsumgebung
+
+Wir wechseln wieder in das Verzeichnis `flask-app`, das wir oben angelegt haben.
+
+Zum Anlegen eines _Virtual Environment_ mit Python 3 sind folgende Schritte erforderlich:
+
+```sh
+$ python3 -m venv venv
+```
+
+Der Befehl führt zum Anlegen eines Verzeichnis mit dem Namen `venv`, das folgenden Inhalt
+aufweist:
+
+```
+bin
+include
+lib
+pyvenv.cfg
+```
+
+Um die virtuelle Umgebung zu starten und das Python Package `flask` zu installieren, sind
+folgende Schritte erforderlich:
+
+```sh
+$ . venv/bin/activate
+(venv) $ pip install flask
+```
+
+Die Installation von Flask führt zur Installation weiterer Abhängigkeiten:
+
+```
+Collecting flask
+  Using cached https://files.pythonhosted.org/packages/f2/28/2a03252dfb9ebf377f40fba6a7841b47083260bf8bd8e737b0c6952df83f/Flask-1.1.2-py2.py3-none-any.whl
+Collecting click>=5.1 (from flask)
+  Using cached https://files.pythonhosted.org/packages/d2/3d/fa76db83bf75c4f8d338c2fd15c8d33fdd7ad23a9b5e57eb6c5de26b430e/click-7.1.2-py2.py3-none-any.whl
+Collecting Werkzeug>=0.15 (from flask)
+  Using cached https://files.pythonhosted.org/packages/cc/94/5f7079a0e00bd6863ef8f1da638721e9da21e5bacee597595b318f71d62e/Werkzeug-1.0.1-py2.py3-none-any.whl
+Collecting Jinja2>=2.10.1 (from flask)
+  Using cached https://files.pythonhosted.org/packages/7e/c2/1eece8c95ddbc9b1aeb64f5783a9e07a286de42191b7204d67b7496ddf35/Jinja2-2.11.3-py2.py3-none-any.whl
+Collecting itsdangerous>=0.24 (from flask)
+  Using cached https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Collecting MarkupSafe>=0.23 (from Jinja2>=2.10.1->flask)
+  Using cached https://files.pythonhosted.org/packages/45/17/5b6a3a0afa0cb9827781ee43d8842a3540ac9d49855cad936099c7b9416b/MarkupSafe-1.1.1-cp36-cp36m-macosx_10_9_x86_64.whl
+Installing collected packages: click, Werkzeug, MarkupSafe, Jinja2, itsdangerous, flask
+Successfully installed Jinja2-2.11.3 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 flask-1.1.2 itsdangerous-1.1.0
+```
+
+Anschließend befinden sich die gerade installierten Python Packages unter `venv/lib/python3.6/site-packages`.
+
+#### Kopieren des Virtual Environment auf den Webspace
+
+Die virtuelle Umgebung kann nun auf den Webspace kopiert werden, z.B. mittels SCP.
+
+```
+$ cd venv/lib/python3.6/site-packages
+$ scp -r flask hostingXXX@188.XXX.XXX.XXX:/flask-app
+$ scp -r click hostingXXX@188.XXX.XXX.XXX:/flask-app
+$ scp -r itsdangerous hostingXXX@188.XXX.XXX.XXX:/flask-app
+$ scp -r werkzeug hostingXXX@188.XXX.XXX.XXX:/flask-app
+$ scp -r jinja2/ hostingXXX@188.XXX.XXX.XXX:/flask-app
+$ scp -r markupsafe/ hostingXXX@188.XXX.XXX.XXX:/flask-app
+```
+
+
+
