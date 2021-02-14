@@ -156,4 +156,4 @@ Will man mehr über den Fehler wissen, so kann man in den Python-Einstellungen (
 auch den Entwicklungsmodus temporär aktivieren. Man erhält dann beim Aufruf der o.g.
 URL folgende Fehlerseite:
 
-![Passenger Error Details](./resources/passenger-error-details.png)
+![Passenger Error Details](/resources/passenger-error-details.png | width=500px)
