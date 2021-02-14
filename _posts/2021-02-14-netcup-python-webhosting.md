@@ -139,15 +139,14 @@ Nun auf den Button `Anwendung Neuladen (Applikation Neuladen)` klicken.
 
 ⚠ Achtung Stolperfalle: wenn man im Formular Python-Einstellungen ändern will, so muss man
 erst auf `Ausschalten` und dann erneut auf `Einschalten` klicken, damit die Änderungen
-tatsächlich übernommen werden. Damit rechnet man nicht. Ich habe es auch erst unter
-https://www.netcup-wiki.de/wiki/Plesk_Onyx_Panel_Webhosting#Python zufällig entdeckt; zumindest
-wurde es aber in der Dokumentation erwähnt.
+tatsächlich übernommen werden. Damit rechnet man nicht. Ich habe es auch erst [im Netcup-Wiki](https://www.netcup-wiki.de/wiki/Plesk_Onyx_Panel_Webhosting#Python)
+zufällig entdeckt; zumindest wurde es aber in der Dokumentation erwähnt.
 
 #### Erster Aufruf der Subdomain
 
 Vorwarnung: wir erwarten einen Fehler, weil `Flask` noch nicht zur Verfügung steht
 
-Im Browser die URL https://flask-app.saschaszott.de aufrufen.
+Im Browser die URL [https://flask-app.saschaszott.de](https://flask-app.saschaszott.de) aufrufen.
 
 Es sollte eine Fehlerseite mit folgender Ausgabe zurückgegeben werden:
 
@@ -238,7 +237,7 @@ $ scp -r markupsafe/ hostingXXX@188.XXX.XXX.XXX:/flask-app
 
 #### Abschluss
 
-Nun kann man erneut die URL https://flask-app.saschaszott.de aufrufen.
+Nun kann man erneut die URL [https://flask-app.saschaszott.de](https://flask-app.saschaszott.de) aufrufen.
 
 Die obige Fehlermeldung sollte durch das Kopieren der fehlenden Python Packages nun
 verschwunden sein.
