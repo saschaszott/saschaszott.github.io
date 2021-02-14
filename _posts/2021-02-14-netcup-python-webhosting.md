@@ -127,7 +127,9 @@ mehrfach gewundert, warum meine Python-Einstellungen nicht übernommen wurden. I
 dann bemerkt, dass ich zwar die Python-Einstellungen aufrufen konnte, aber meine Session schon
 abgelaufen war, was letztendlich dazu führte, dass die Einstellungen nicht erfolgreich gespeichert
 wurden. Daher mein Tipp: immer mal auf CCP (Customer Control Panel) in einem zweiten Browser-Tab
-klicken und schauen, ob man dort tatsächlich noch angemeldet ist.
+klicken und schauen, ob man dort tatsächlich noch angemeldet ist. Außerdem hat es bei mir mit dem
+Safari nicht zuverlässig funktioniert die Änderungen zu speichern. Mit Chrome habe ich diese
+Probleme nicht beobachtet, daher würde ich für diese Konfigurationstätigkeiten diesen Browser empfehlen.
 
 In den Python-Einstellungen sollte nun die oben noch angezeigte Warnmeldung (`passenger_wsgi.py`
 konnte nicht gefunden werden) verschwunden sein.
