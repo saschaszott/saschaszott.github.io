@@ -13,7 +13,7 @@ title:  "Python 3 Webhosting mit Netcup"
 - ferner war [dieses Github-Repo](https://github.com/phusion/passenger-python-flask-demo/tree/end_result) hilfreich für die ersten Schritte 
 - die Anleitung wurde mit Python 3 erstellt und gestest -- vermutlich kann die Anleitung mit leichten Modifikationen aber auch verwendet werden, um ein Python 2 Projekt zu hosten
 
-⚠ Achtung Stolperfalle: Die Anleitung zum Deployment von Python-Anwenungen im [Netcup-Wiki](https://www.netcup-wiki.de/wiki/Python_Webprogrammierung) scheint nicht mehr dem Stand der Technik zu entsprechen. Die darin enthaltenen Anweisungen kann man daher ignorieren ;)
+⚠ Achtung Stolperfalle: Die Anleitung zum Deployment von Python-Anwendungen im [Netcup-Wiki](https://www.netcup-wiki.de/wiki/Python_Webprogrammierung) scheint nicht mehr dem aktuellen Stand der Technik zu entsprechen. Die darin enthaltenen Anweisungen kann man daher ignorieren ;)
 
 ### Konfigurationsanleitung für eine einfache Flask-App
 
@@ -39,11 +39,13 @@ title:  "Python 3 Webhosting mit Netcup"
    - App Root: `/flask-app`
    - alle anderen Einstellungen können belassen werden
    - auf Button _Einschalten_ drücken
-   - es erscheint die Warnmeldung _Warnung: Startup Datei existiert nicht_
+   - es erscheint die Warnmeldung _Warnung: Startup Datei existiert nicht_ (dieses Problem werden wir gleich lösen)
 
 #### Python-Projekt auf lokaler Entwicklungsmaschine erstellen
 
 Es wird im Folgenden davon ausgegangen, dass auf der lokalen Entwicklungmaschine Python 3 (hier: 3.6) installiert ist.
+
+Zuerst legt man ein Projektverzeichnis (hier `flask-app`) an:
 
 ```
 $ mkdir flask-app
@@ -52,7 +54,7 @@ $ echo 'from app import MyApp as application' > passenger_wsgi.py
 $ mkdir templates
 ```
 
-Im Verzeichnis `flask-app` eine Datei `app.py` anlegen mit folgendem Inhalt:
+Danach wird im Verzeichnis `flask-app` eine Datei `app.py` mit folgendem Inhalt angelegt:
 
 ```py
 from flask import Flask, render_template
@@ -66,7 +68,7 @@ if __name__ == "__main__":
     MyApp.run()
 ```
 
-Im Verzeichnis `flask-app/templates` eine Datei `index.html` anlegen mit folgenden Inhalt:
+Im Verzeichnis `flask-app/templates` wird nun ein HTML-Template `index.html` mit folgenden Inhalt angelegt:
 
 ```html
 <!DOCTYPE html>
@@ -98,11 +100,11 @@ Im Verzeichnis `flask-app/templates` eine Datei `index.html` anlegen mit folgend
 
 #### Deployment des Python-Projekts
 
-Per SCP oder FTP den Inhalt des lokal gespeicherten Verzeichnis `flask-app`
-auf den Webspace unter `/flask-app` kopieren.
+Per SCP oder FTP wird nun der Inhalt des lokal gespeicherten Verzeichnis `flask-app`
+auf den Webspace unter `/flask-app` kopiert.
 
 ```sh
-$ scp -r flask-app/ hostingxxx@188.XXX.XXX.XXX:/
+$ scp -r flask-app/ hostingXXX@188.XXX.XXX.XXX:/
 ```
 
 Im Webhosting sollte das Verzeichnis `/flask-app` nun folgende Struktur aufweisen:
@@ -118,43 +120,43 @@ Im Webhosting sollte das Verzeichnis `/flask-app` nun folgende Struktur aufweise
 
 #### Phusion Passenger Server neustarten
 
-In das WCP wechseln und dort für die oben angelegte Subdomain auf den Eintrag
-_Python_ klicken.
+In das WCP wechseln und dort für die oben angelegte Subdomain auf den Eintrag _Python_ klicken.
 
 ⚠ Achtung Stolperfalle: die WCP-Session läuft nach ca. 15 Minuten Inaktivität stillschweigend ab.
 Leider merkt man das nicht immer unmittelbar, wenn man sich im WCP bewegt. Ich habe mich schon
 mehrfach gewundert, warum meine Python-Einstellungen nicht übernommen wurden. Irgendwann habe ich
 dann bemerkt, dass ich zwar die Python-Einstellungen aufrufen konnte, aber meine Session schon
 abgelaufen war, was letztendlich dazu führte, dass die Einstellungen nicht erfolgreich gespeichert
-wurden. Daher mein Tipp: immer mal auf CCP (Customer Control Panel) in einem zweiten Browser-Tab
+wurden. Daher mein Tipp: immer mal auf das CCP (Customer Control Panel) in einem zweiten Browser-Tab
 klicken und schauen, ob man dort tatsächlich noch angemeldet ist. Außerdem hat es bei mir mit dem
 Safari nicht zuverlässig funktioniert die Änderungen zu speichern. Mit Chrome habe ich diese
-Probleme nicht beobachtet, daher würde ich für diese Konfigurationstätigkeiten diesen Browser empfehlen.
+Probleme nicht beobachtet, daher würde ich (zumindest) für diese Konfigurationstätigkeiten diesen Browser empfehlen.
 
 In den Python-Einstellungen sollte nun die oben noch angezeigte Warnmeldung (`passenger_wsgi.py`
 konnte nicht gefunden werden) verschwunden sein.
 
 Nun auf den Button `Anwendung Neuladen (Applikation Neuladen)` klicken.
 
-⚠ Achtung Stolperfalle: wenn man im Formular Einstellungen ändern will, so muss man
+⚠ Achtung Stolperfalle: wenn man im Formular Python-Einstellungen ändern will, so muss man
 erst auf `Ausschalten` und dann erneut auf `Einschalten` klicken, damit die Änderungen
 tatsächlich übernommen werden. Damit rechnet man nicht. Ich habe es auch erst unter
-https://www.netcup-wiki.de/wiki/Plesk_Onyx_Panel_Webhosting#Python zufällig entdeckt.
+https://www.netcup-wiki.de/wiki/Plesk_Onyx_Panel_Webhosting#Python zufällig entdeckt; zumindest
+wurde es aber in der Dokumentation erwähnt.
 
 #### Erster Aufruf der Subdomain
 
-Vorwarnung: wir erwarten einen Fehler, weil `Flask` nicht zur Verfügung steht
+Vorwarnung: wir erwarten einen Fehler, weil `Flask` noch nicht zur Verfügung steht
 
 Im Browser die URL https://flask-app.saschaszott.de aufrufen.
 
-Es sollte eine Fehlerseite mit folgender Aussgabe zurückgegeben werden:
+Es sollte eine Fehlerseite mit folgender Ausgabe zurückgegeben werden:
 
 ```
 We're sorry, but something went wrong.
 The issue has been logged for investigation. Please try again later.
 ```
 
-Will man mehr über den Fehler wissen, so kann man in den Python-Einstellungen (s.o.)
+Will man etwas mehr über den Fehler wissen, so kann man in den Python-Einstellungen (s.o.)
 im WCP auch den Entwicklungsmodus temporär aktivieren. Man erhält dann beim Aufruf der o.g.
 URL folgende Fehlerseite:
 
@@ -167,12 +169,12 @@ ImportError: No module named 'flask'
 ```
 
 Wie oben beschrieben, ist es im Webhosting-Tarif leider nicht möglich fehlende Packages
-per `pip` zu installieren. Über einen Umweg (Anlegen eines _virtual environment_ `venv`)
-kommen wir aber dennoch zum Ziel und können das fehlende Flask Package installieren.
+per `pip` (oder alternativ `conda`) zu installieren. Über einen Umweg (Anlegen eines _virtual environment_ `venv`)
+kommen wir aber dennoch zum Ziel und können das fehlende Flask Package auf dem Webspace installieren.
 
 #### Erzeugen eines Virtual Environment in der lokalen Entwicklungsumgebung
 
-Wir wechseln wieder in das Verzeichnis `flask-app`, das wir oben angelegt haben.
+In der lokalen Entwicklungsumgebung wechseln wir wieder in das Verzeichnis `flask-app`, das wir oben angelegt haben.
 
 Zum Anlegen eines _Virtual Environment_ mit Python 3 sind folgende Schritte erforderlich:
 
@@ -217,7 +219,8 @@ Installing collected packages: click, Werkzeug, MarkupSafe, Jinja2, itsdangerous
 Successfully installed Jinja2-2.11.3 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 flask-1.1.2 itsdangerous-1.1.0
 ```
 
-Anschließend befinden sich die gerade installierten Python Packages unter `venv/lib/python3.6/site-packages`.
+Anschließend befinden sich die gerade installierten Python Packages unter `venv/lib/python3.6/site-packages`
+im lokalen Verzeichnis `flask-app`.
 
 #### Kopieren des Virtual Environment auf den Webspace
 
@@ -240,7 +243,7 @@ Nun kann man erneut die URL https://flask-app.saschaszott.de aufrufen.
 Die obige Fehlermeldung sollte durch das Kopieren der fehlenden Python Packages nun
 verschwunden sein.
 
-Es sollte im Webbrowser folgende Ausgabe erscheinen:
+Es sollte im Webbrowser folgende Ausgabe erscheinen (das ist das gerenderte HTML-Template):
 
 ![Flask Result](/resources/flask-result.png)
 
