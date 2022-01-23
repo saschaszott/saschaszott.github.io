@@ -248,19 +248,14 @@ Es sollte im Webbrowser folgende Ausgabe erscheinen (das ist das gerenderte HTML
 
 #### Offene Punkte
 
-Hier führe ich noch einige Fragen auf, die ich bis dato nicht geklärt habe:
+Hier führe ich noch einige Fragen auf, die ich bis dato nicht geklärt habe: _aktuell gibt es keine ;)_
 
-_aktuell keine_
+##### Bereits geklärte Fragen
 
-Geklärt wurden folgende Fragen:
+**Frage**: Kann man das Kopieren der Python Packages von der lokalen Entwicklungsumgebung auf den Webspace einfach automatisieren (ohne die Kaskade der SCP-Befehle)? 
 
-- Kann man das Kopieren der Python Packages von der lokalen Entwicklungsumgebung auf den Webspace
-  einfach automatisieren (ohne die Kaskade der SCP-Befehle)? 
+**Antwort**: Hierzu gibt es einen Hinweis von @cyroxx in Issue #1 https://github.com/saschaszott/saschaszott.github.io/issues/1.
   
-  Hierzu gibt es einen Hinweis von @cyroxx in Issue #1 https://github.com/saschaszott/saschaszott.github.io/issues/1.
+**Frage**: Das Erzeugen der `venv` führt zu weiteren Paketen im Verzeichnis `venv/lib/python3.6/site-packages`, z.B. `setuptools`, `pkg_resources`, `easy_install.py`? 
   
-- Das Erzeugen der `venv` führt zu weiteren Paketen im Verzeichnis `venv/lib/python3.6/site-packages`,
-  z.B. `setuptools`, `pkg_resources`, `easy_install.py`? 
-  
-  Diese Pakete werden benötigt, damit Pakete per pip nachinstalliert werden können. Danke an @cyroxx
-  für den Hinweis.
+**Antwort**: Diese Pakete werden benötigt, damit Pakete per pip nachinstalliert werden können. Danke an @cyroxx für den Hinweis.
