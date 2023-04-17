@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Analysis Linkliste"
-date:   2023-04-17 12:00:00 -0600
 ---
 
 Hier werden Links zu nützlichen Videos, Büchern, Blogposts etc. gesammelt, die bei der Bearbeitung der Vorlesung **Analysis** im Mathematikstudium hilfreich sind:
