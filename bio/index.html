@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Dimer Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        pre {
+            font-family: monospace;
+            white-space: pre-wrap; /* Zeilenumbruch */
+            word-wrap: break-word; /* Wortumbruch */
+        }
+        .highlight {
+            color: red; /* Markiere maximale Bindungen in rot */
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Self Dimer Finder</h1>
+
+        <form id="primerForm" class="mb-4">
+            <div class="mb-3">
+                <label for="primer" class="form-label">Primer 1:</label>
+                <input type="text" id="primer" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="primer2" class="form-label">Primer 2 (optional):</label>
+                <input type="text" id="primer2" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Berechnen</button>
+        </form>
+
+        <hr/>
+
+        <h2>Ergebnisse</h2>
+
+        <p id="maxBindings" class="alert alert-info"></p>
+        
+        <h3>Detailergebnisse:</h3>
+        <pre id="dimerResult" class="bg-light p-3"></pre>
+
+        <h3>Shift-Ergebnisse:</h3>
+        <table id="resultsTable" class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Shift</th>
+                    <th>Shifted Reverse</th>
+                    <th>Anzahl der Bindungen</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap 5 JS und Popper.js einbinden -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Funktion, um die Bindepaarungen zu berechnen
+        function getBindingPattern(seq1, seq2, maxBindings) {
+            let bindingPattern = [];
+            for (let i = 0; i < seq1.length; i++) {
+                let p = seq1[i];
+                let r = seq2[i];
+                let bind = false;
+                if ((p === 'A' && r === 'T') || (p === 'T' && r === 'A') || 
+                    (p === 'C' && r === 'G') || (p === 'G' && r === 'C')) {
+                    bind = true;
+                }
+
+                if (bind) {
+                    bindingPattern.push('|');
+                } else {
+                    bindingPattern.push(' ');
+                }
+            }
+            return bindingPattern;
+        }
+
+        // Funktion zur Berechnung der Dimeren
+        function findSelfDimers(primer, primer2 = null) {
+            let result = [];
+            let maxBindings = 0;
+            let revSeq = primer2 || primer.split('').reverse().join('');  // Reverse der ersten Sequenz
+
+            let dimerResult = '';  // Variable, um die Ergebnisse als textuelle Darstellung zu sammeln
+
+            // Schrittweiser Rechtsshift
+            for (let shift = 0; shift < primer.length; shift++) {
+                let shiftedRevRight = ' '.repeat(shift) + revSeq.slice(0, primer.length - shift);
+                let bindingPatternRight = getBindingPattern(primer, shiftedRevRight, (primer.length - shift === maxBindings));
+                let bindingPattern = bindingPatternRight.join('');
+                let count = (bindingPattern.match(/\|/g) || []).length;
+
+                if (count > maxBindings) {
+                    maxBindings = count;
+                }
+
+                // Erzeuge die Darstellung für den pre-Block
+                dimerResult += `Shift ${shift} (Rechts):\n`;
+                dimerResult += primer + '\n';
+                dimerResult += bindingPattern + '\n';
+                dimerResult += shiftedRevRight + '\n\n';
+
+                result.push({
+                    shift: shift,
+                    direction: 'right',
+                    primer: primer,
+                    bindingPattern: bindingPattern,
+                    shiftedRev: shiftedRevRight,
+                    count: count
+                });
+            }
+
+            // Schrittweiser Linksshift
+            for (let shift = 1; shift < primer.length; shift++) {
+                let shiftedRevLeft = revSeq.slice(shift) + ' '.repeat(shift);
+                let bindingPatternLeft = getBindingPattern(primer, shiftedRevLeft, (shift === maxBindings));
+                let bindingPattern = bindingPatternLeft.join('');
+                let count = (bindingPattern.match(/\|/g) || []).length;
+
+                if (count > maxBindings) {
+                    maxBindings = count;
+                }
+
+                // Erzeuge die Darstellung für den pre-Block
+                dimerResult += `Shift ${shift} (Links):\n`;
+                dimerResult += primer + '\n';
+                dimerResult += bindingPattern + '\n';
+                dimerResult += shiftedRevLeft + '\n\n';
+
+                result.push({
+                    shift: shift,
+                    direction: 'left',
+                    primer: primer,
+                    bindingPattern: bindingPattern,
+                    shiftedRev: shiftedRevLeft,
+                    count: count
+                });
+            }
+
+            // Ergebnisse nach Anzahl der Bindungen sortieren (absteigend)
+            result.sort((a, b) => b.count - a.count);
+
+            return { result, maxBindings, dimerResult };
+        }
+
+        // Formular-Submitter
+        document.getElementById("primerForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Verhindert das Neuladen der Seite
+            let primer = document.getElementById("primer").value.toUpperCase();
+            let primer2 = document.getElementById("primer2").value.toUpperCase();
+
+            // Berechne Dimeren
+            let { result, maxBindings, dimerResult } = findSelfDimers(primer, primer2);
+
+            // Setze die maximale Bindungsanzahl
+            document.getElementById("maxBindings").textContent = `Maximale Anzahl der Bindepaarungen: ${maxBindings}`;
+
+            // Zeige die Ergebnisse im pre-Block an
+            document.getElementById("dimerResult").textContent = dimerResult;
+
+            // Setze die Detailergebnisse in der Tabelle
+            let resultsTableBody = document.getElementById("resultsTable").getElementsByTagName("tbody")[0];
+            resultsTableBody.innerHTML = ''; // Leere vorherige Tabelle
+            result.forEach(entry => {
+                let row = resultsTableBody.insertRow();
+                row.insertCell(0).textContent = entry.direction + "-" + entry.shift;
+                row.insertCell(1).textContent = entry.shiftedRev;
+                row.insertCell(2).textContent = entry.count;
+            });
+        });
+    </script>
+</body>
+</html>
